@@ -1,0 +1,305 @@
+{% extends 'MainApp/base.html' %}
+{% load static %} 
+
+{% block custom_css %}
+{% endblock custom_css %}
+
+
+{% block content %}
+<div class=" pt-32pt pt-sm-64pt pb-32pt was-validated">
+    <div class="container page__container">
+        <form method="POST" class="col-md-12 p-0 mx-auto">{% csrf_token %}
+            <div class="col-lg-12 d-flex align-items-center">
+                <div class="flex"
+                    style="max-width: 100%">
+
+                    <div class="was-validated">
+                        <div class="form-row">
+                            <div class="col-6 col-md-6 mb-3">
+                                <label class="form-label"
+                                    for="validationKonsumen">Konsumen</label>
+                                <input type="text"
+                                    class="form-control"
+                                    id="validationKonsumen"
+                                    placeholder="Konsumen"
+                                    required="" name="konsumen" list="dataKonsumen" {% if instance %}value="{{ instance.klien }}{% endif %}">
+                                <datalist id="dataKonsumen">
+                                    {% for i in klien_list %} 
+                                    <option value="{{ i.klien }}"></option>
+                                    {% endfor %}
+                                </datalist>
+                                <div class="invalid-feedback">Please provide a konsumen.</div>
+                                <div class="valid-feedback">Looks good!</div>
+                            </div>
+                            
+                            <div class="col-6 col-md-6 mb-3">
+                                <label class="form-label"
+                                    for="validationPekerjaan">Pekerjaan</label>
+                                <input type="text"
+                                    class="form-control"
+                                    id="validationPekerjaan"
+                                    placeholder="Pekerjaan"
+                                    required="" name="pekerjaan" {% if instance %}value="{{ instance.proyek }}"{% endif %}>
+                                <div class="invalid-feedback">Please provide a pekerjaan.</div>
+                                <div class="valid-feedback">Looks good!</div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <!-- <div class="col-6 col-md-6 mb-3">
+                                <label class="form-label"
+                                    for="validationInv">No Invoice</label>
+                                <input type="text"
+                                    class="form-control"
+                                    id="validationInv"
+                                    placeholder="No Invoice"
+                                    required="" name="noinv" {% if instance %}value="{{ no_inv }}"{% endif %}>
+                                <div class="invalid-feedback">Please provide a nomor invoice.</div>
+                                <div class="valid-feedback">Looks good!</div>
+                            </div> -->
+                            <div class="col-6 col-md-6 mb-3">
+                                <label class="form-label"
+                                    for="validationPOSPK">No PO/SPK</label>
+                                <input type="text"
+                                    class="form-control"
+                                    id="validationPOSPK"
+                                    placeholder="No PO/SPK"
+                                    required="" name="nopospk" {% if instance %}value="{{ instance.nopospk }}"{% endif %}>
+                                <div class="invalid-feedback">Please provide a nomor po or spk.</div>
+                                <div class="valid-feedback">Looks good!</div>
+                            </div>
+                        </div>
+                        <!-- This is the new part-->
+                        {% if instance %}
+                        <div class="form-row">
+                            <div class="custom-control custom-checkbox">
+                                <input class="custom-control-input"
+                                       type="checkbox"
+                                       value="revisi"
+                                       id="invalidCheck01" name="revisi_cb">
+                                <label class="custom-control-label"
+                                       for="invalidCheck01">
+                                    Revisi
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <button class="btn btn-outline-dark d-block mr-0 ml-auto"
+                                type="button" id="iniNihBtn">Material</button>
+                        </div>
+
+
+                        <div id="iniNih">
+                        {% for i in instance.invoice_detail.all %}
+                        <div class="input-group">
+                            <div class="form-row anak" id="mat{{ i.pk }}">
+                                <div class="col-3 col-md-3 mb-3">
+                                    <label class="form-label"
+                                        for="validationSample01">Material</label>
+                                    <input type="text"
+                                        class="form-control"
+                                        id="validationSample01"
+                                        placeholder="Material"
+                                        required="" name="material" value="{{ i.nama_barang }}">
+                                    <div class="invalid-feedback">Please provide a material.</div>
+                                    <div class="valid-feedback">Looks good!</div>
+                                </div>
+                                <div class="col-2 col-md-2 mb-3">
+                                    <label class="form-label"
+                                        for="validationSample02">Qty</label>
+                                    <input type="text"
+                                        class="form-control cobaQTY"
+                                        id="validationSample02"
+                                        placeholder="Qty"
+                                        required="" name="qty" value="{{ i.qty }}">
+                                    <div class="invalid-feedback">Please provide a qty.</div>
+                                    <div class="valid-feedback">Looks good!</div>
+                                </div>
+                                <div class="col-3 col-md-3 mb-3">
+                                    <label class="form-label"
+                                        for="validationSample02">Satuan</label>
+                                    <input type="text"
+                                        class="form-control"
+                                        id="validationSample02"
+                                        placeholder="Satuan"
+                                        required="" name="satuan" value="{{ i.satuan }}">
+                                    <div class="invalid-feedback">Please provide a satuan.</div>
+                                    <div class="valid-feedback">Looks good!</div>
+                                </div>
+                                <div class="col-3 col-md-3 mb-3">
+                                    <label class="form-label"
+                                        for="validationSample02">Harga Satuan</label>
+                                    <input type="text"
+                                        class="form-control cobaHS"
+                                        id="validationSample02"
+                                        placeholder="Harga Satuan"
+                                        required="" name="harga_satuan" value="{{ i.harga_satuan }}">
+                                    <div class="invalid-feedback">Please provide a harga satuan.</div>
+                                    <div class="valid-feedback">Looks good!</div>
+                                </div>
+                                <div class="col-1 col-md-1 mb-3"><label class="form-label">Opsi</label><button type="button" class="btn btn-danger removeDivBtn" data-id="mat{{ i.pk }}" id="removeDivBtn">Del</button></div>
+                            </div>
+                            <input type="hidden" name="pk_material" value="{{ i.pk }}">
+                        </div>
+                        {% endfor %}
+                        </div>
+
+
+                        {% else %}
+                        <div class="form-row">
+                            <button class="btn btn-outline-dark d-block mr-0 ml-auto"
+                                type="button" id="iniNihBtn" data-increment="1">Material</button>
+                        </div>
+                        <div class="input-group iniNih" id="iniNih">
+                            <div class="form-row anak" id="">
+                                <div class="col-3 col-md-3 mb-3">
+                                    <label class="form-label"
+                                        for="validationSample01">Material</label>
+                                    <input type="text"
+                                        class="form-control"
+                                        id="validationSample01"
+                                        placeholder="Material"
+                                        required="" name="material">
+                                    <div class="invalid-feedback">Please provide a material.</div>
+                                    <div class="valid-feedback">Looks good!</div>
+                                </div>
+                                <div class="col-2 col-md-2 mb-3">
+                                    <label class="form-label"
+                                        for="validationSample02">Qty</label>
+                                    <input type="text"
+                                        class="form-control cobaQTY"
+                                        id="validationSample02"
+                                        placeholder="Qty"
+                                        required="" name="qty">
+                                    <div class="invalid-feedback">Please provide a qty.</div>
+                                    <div class="valid-feedback">Looks good!</div>
+                                </div>
+                                <div class="col-3 col-md-3 mb-3">
+                                    <label class="form-label"
+                                        for="validationSample02">Satuan</label>
+                                    <input type="text"
+                                        class="form-control"
+                                        id="validationSample02"
+                                        placeholder="Satuan"
+                                        required="" name="satuan">
+                                    <div class="invalid-feedback">Please provide a satuan.</div>
+                                    <div class="valid-feedback">Looks good!</div>
+                                </div>
+                                <div class="col-3 col-md-3 mb-3">
+                                    <label class="form-label"
+                                        for="validationSample02">Harga Satuan</label>
+                                    <input type="text"
+                                        class="form-control cobaHS"
+                                        id="validationSample02"
+                                        placeholder="Harga Satuan"
+                                        required="" name="harga_satuan">
+                                    <div class="invalid-feedback">Please provide a harga satuan.</div>
+                                    <div class="valid-feedback">Looks good!</div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <input type="hidden" name="aksi" {% if instance %}value="update_invoice"{% else %}value="tambah_baru"{% endif %}>
+                    <div class="form-row">
+                        <button class="btn btn-primary d-block"
+                                type="submit">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %} 
+
+{% block custom_js %}
+<script src="{% static 'assets/js_gue/gue.js' %}"></script>
+{% if instance %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var wrapper_material = $("#iniNih");
+		var add_material = $('#iniNihBtn');
+		var sum_material = $("input[name='material']").length;
+
+		$(add_material).click(function(e) {
+			e.preventDefault();
+			$(wrapper_material).append(`<div class="input-group"><div class="form-row anak"><div class="col-3 col-md-3 mb-3"><label class="form-label" for="validationSample01">Material</label><input type="text" class="form-control" id="validationSample01" placeholder="Material" required="" name="material"><div class="invalid-feedback">Please provide a material.</div><div class="valid-feedback">Looks good!</div></div><div class="col-2 col-md-2 mb-3"><label class="form-label" for="validationSample02">Qty</label><input type="text" class="form-control cobaQTY" id="validationSample02" placeholder="Qty" required="" name="qty"><div class="invalid-feedback">Please provide a qty.</div><div class="valid-feedback">Looks good!</div></div><div class="col-3 col-md-3 mb-3"><label class="form-label" for="validationSample02">Satuan</label><input type="text"
+                                        class="form-control"
+                                        id="validationSample02"
+                                        placeholder="Satuan"
+                                        required="" name="satuan">
+                                    <div class="invalid-feedback">Please provide a satuan.</div>
+                                    <div class="valid-feedback">Looks good!</div>
+                                </div>
+                                <div class="col-3 col-md-3 mb-3">
+                                    <label class="form-label"
+                                        for="validationSample02">Harga Satuan</label>
+                                    <input type="text"
+                                        class="form-control cobaHS"
+                                        id="validationSample02"
+                                        placeholder="Harga Satuan"
+                                        required="" name="harga_satuan">
+                                    <div class="invalid-feedback">Please provide a harga satuan.</div>
+                                    <div class="valid-feedback">Looks good!</div>
+                                </div><div class="col-1 col-md-1 mb-3"><label class="form-label">Opsi</label><button type="button" class="btn btn-danger removeDivBtn" id="removeDivBtn">Del</button></div></div></div>`);
+			sum_material++;
+            fak();
+		});
+
+        $(wrapper_material).on("click", "#removeDivBtn", function(e) {
+			e.preventDefault();
+			sum_material--;
+			$(this).parent('div').parent('div').remove();
+			if(sum_material == 0) {
+				$(wrapper_material).append(`<div class="input-group"><div class="form-row anak"><div class="col-3 col-md-3 mb-3"><label class="form-label" for="validationSample01">Material</label><input type="text" class="form-control" id="validationSample01" placeholder="Material" required="" name="material"><div class="invalid-feedback">Please provide a material.</div><div class="valid-feedback">Looks good!</div></div><div class="col-2 col-md-2 mb-3"><label class="form-label" for="validationSample02">Qty</label><input type="text" class="form-control cobaQTY" id="validationSample02" placeholder="Qty" required="" name="qty"><div class="invalid-feedback">Please provide a qty.</div><div class="valid-feedback">Looks good!</div></div><div class="col-3 col-md-3 mb-3"><label class="form-label" for="validationSample02">Satuan</label><input type="text"
+                                        class="form-control"
+                                        id="validationSample02"
+                                        placeholder="Satuan"
+                                        required="" name="satuan">
+                                    <div class="invalid-feedback">Please provide a satuan.</div>
+                                    <div class="valid-feedback">Looks good!</div>
+                                </div>
+                                <div class="col-3 col-md-3 mb-3">
+                                    <label class="form-label"
+                                        for="validationSample02">Harga Satuan</label>
+                                    <input type="text"
+                                        class="form-control cobaHS"
+                                        id="validationSample02"
+                                        placeholder="Harga Satuan"
+                                        required="" name="harga_satuan">
+                                    <div class="invalid-feedback">Please provide a harga satuan.</div>
+                                    <div class="valid-feedback">Looks good!</div>
+                                </div><div class="col-1 col-md-1 mb-3"><label class="form-label">Opsi</label><button type="button" class="btn btn-danger removeDivBtn" id="removeDivBtn">Del</button></div></div></div>`);
+				sum_material++;
+			};
+		});
+
+        document.getElementById('invalidCheck01').onchange = function() {
+            document.getElementById('validationInv').disabled = this.checked;
+            document.getElementById('validationKonsumen').disabled = this.checked;
+        };
+
+    });
+</script>
+{% else %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#iniNihBtn').click(function () {
+            var increment = $(this).data('increment');
+            var newIncrement = increment + 1;
+            $(this).data('increment', newIncrement);
+            var newInput = $('#iniNih').clone();
+            newInput.attr('id', 'iniNih' + newIncrement);
+            newInput.find('input').val('');
+            newInput.find('.anak').append('<div class="col-1 col-md-1 mb-3"><label class="form-label">Opsi</label><button type="button" class="btn btn-danger removeDivBtn" data-id="iniNih' + newIncrement + '">Del</button></div>');
+            newInput.insertAfter($('#iniNih'));
+            
+            newInput.find('.removeDivBtn').click(function () {
+                var id = $(this).data('id');
+                $('#' + id).remove();
+            });
+            fak();
+        });
+    });
+</script>
+{% endif %}
+{% endblock custom_js %}

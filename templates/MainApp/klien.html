@@ -1,0 +1,181 @@
+{% extends 'MainApp/base.html' %}
+{% load static %}
+
+{% block add_data %}
+<div class="row" role="tablist">
+    <div class="col-auto border-left">
+        <a href="{% url 'MainApp:klien_add' %}" class="btn btn-accent">Add Klien</a>
+    </div>
+</div>
+{% endblock add_data %}
+
+{% block content %}
+<div class="page-separator">
+    <div class="page-separator__text">Klien</div>
+</div>
+
+<div class="card mb-lg-32pt">
+
+    <div class="table-responsive" data-toggle="lists" data-lists-sort-by="js-lists-values-date"
+        data-lists-sort-desc="true"
+        data-lists-values='["js-lists-values-name", "js-lists-values-kode"]'>
+
+        <table class="table mb-0 thead-border-top-0 table-nowrap">
+            <thead>
+                <tr>
+                    <th>
+                        <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-name">Name</a>
+                    </th>
+
+                    <th style="width: 150px;">
+                        <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-kode">Kode</a>
+                    </th>
+
+                    <th style="width: 48px;">
+                        <a href="javascript:void(0)">Kontak</a>
+                    </th>
+
+                    <th style="width: 48px;">
+                        <a href="javascript:void(0)">Alamat</a>
+                    </th>
+                    <th style="width: 24px;"></th>
+                </tr>
+            </thead>
+            <tbody class="list" id="klien">
+                {% for i in klien_list %} 
+                <tr>
+                    <td>
+                        <div class="media flex-nowrap align-items-center" style="white-space: nowrap;">
+                            <div class="media-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex d-flex flex-column">
+                                        <p class="mb-0"><strong class="js-lists-values-name"><a href="{% url 'MainApp:klien_update' pk=i.pk %}">{{ i.klien }}</a></strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="media flex-nowrap align-items-center" style="white-space: nowrap;">
+                            <div class="media-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex d-flex flex-column">
+                                        <p class="mb-0"><strong class="js-lists-values-kode">{{ i.kode }}</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="media flex-nowrap align-items-center" style="white-space: nowrap;">
+                            <div class="media-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex d-flex flex-column">
+                                        <p class="mb-0"><strong class="js-lists-values-name">{{ i.telp }}</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="media flex-nowrap align-items-center" style="white-space: nowrap;">
+                            <div class="media-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex d-flex flex-column">
+                                        <p class="mb-0"><strong class="js-lists-values-name">{{ i.alamat }}</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card-footer p-8pt">
+
+        <ul class="pagination justify-content-start pagination-xsm m-0">
+
+            {% if klien_list.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ klien_list.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true" class="material-icons">chevron_left</span>
+                        <span>Prev</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true" class="material-icons">chevron_left</span>
+                        <span>Prev</span>
+                    </a>
+                </li>
+            {% endif %}
+
+            {% if klien_list.number|add:'-4' > 1 %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ klien_list.number|add:'-5' }}" aria-label="Page">
+                        <span>&hellip;</span>
+                    </a>
+                </li>
+            {% endif %}
+
+            {% for i in klien_list.paginator.page_range %}
+                {% if klien_list.number == i %}
+                    <li class="page-item active">
+                        <a class="page-link" href="#" aria-label="Page">
+                            <span>{{ i }}</span>
+                        </a>
+                    </li>
+                {% elif i > klien_list.number|add:'-5' and i < klien_list.number|add:'5' %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ i }}" aria-label="Page">
+                            <span>{{ i }}</span>
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            {% if klien_list.paginator.num_pages > klien_list.number|add:'4' %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ klien_list.number|add:'5' }}" aria-label="Page">
+                        <span>&hellip;</span>
+                    </a>
+                </li>
+            {% endif %}
+
+            {% if klien_list.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ klien_list.next_page_number }}" aria-label="Next">
+                        <span>Next</span>
+                        <span aria-hidden="true" class="material-icons">chevron_right</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span>Next</span>
+                        <span aria-hidden="true" class="material-icons">chevron_right</span>
+                    </a>
+                </li>
+            {% endif %}
+
+
+
+
+
+            
+        </ul>
+
+    </div>
+
+</div>
+
+
+{% endblock content %}

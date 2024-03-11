@@ -1,0 +1,238 @@
+{% extends 'MainApp/base.html' %}
+{% load static %}
+
+{% block custom_css %}
+
+{% endblock custom_css %}
+
+
+{% block add_data %}
+<div class="row" role="tablist">
+    <div class="col-auto border-left">
+        <a href="{% url 'MainApp:invoice_add' %}" class="btn btn-accent">Add Invoice</a>
+    </div>
+</div>
+{% endblock add_data %}
+
+{% block content %}
+<div class="page-separator">
+    <div class="page-separator__text">Invoice</div>
+</div>
+
+<div class="card mb-lg-32pt">
+
+    <div class="table-responsive" data-toggle="lists" data-lists-sort-by="js-lists-values-date"
+        data-lists-sort-desc="true"
+        data-lists-values='["js-lists-values-tgl", "js-lists-values-nomor", "js-lists-values-konsumen"]'>
+
+        <table class="table mb-0 thead-border-top-0 table-nowrap">
+            <thead>
+                <tr>
+                    <th style="width: 48px;">
+                        <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-tgl">Tanggal</a>
+                    </th>
+
+                    <th style="width: 150px;">
+                        <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-nomor">Nomor</a>
+                    </th>
+
+                    <th style="width: 48px;">
+                        <a href="javascript:void(0)" class="sort" data-sort="js-lists-values-konsumen">Konsumen</a>
+                    </th>
+                    <th style="width: 20px;">
+                        Opsi
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="list" id="klien">
+                {% for i in data_list %} 
+                <tr>
+                    <td>
+                        <div class="media flex-nowrap align-items-center" style="white-space: nowrap;">
+                            <div class="media-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex d-flex flex-column">
+                                        <p class="mb-0"><strong class="js-lists-values-tgl">{{ i.created|date:"d-M-Y" }}</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="media flex-nowrap align-items-center" style="white-space: nowrap;">
+                            <div class="media-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex d-flex flex-column">
+                                        <p class="mb-0"><strong class="js-lists-values-nomor"><a href="{% url 'MainApp:invoice_update' pk=i.pk %}">{{ i.nomor }}</strong></a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="media flex-nowrap align-items-center" style="white-space: nowrap;">
+                            <div class="media-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex d-flex flex-column">
+                                        <p class="mb-0"><strong class="js-lists-values-konsumen">{{ i.klien }}</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="media flex-nowrap align-items-center" style="white-space: nowrap;">
+                            <div class="media-body">
+                                <div class="d-flex align-items-center">
+                                    <!-- <div class="flex d-flex flex-column">
+                                        <td class="text-right">
+                                            <a href="" class="text-50 dropdown-toggle" data-toggle="dropdown"><i class="material-icons">more_vert</i></a>
+                                        </td>
+                                    </div>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <div class="dropdown-header"><strong>Account</strong></div>
+                                        <a class="dropdown-item" href="#">Edit Account</a>
+                                        <form method="post" action="{% url 'MainApp:logout' %}">
+                                            {% csrf_token %}
+                                            <button class="dropdown-item" type="submit">Logout</button>
+                                        </form>
+                                        
+                                    </div> -->
+                                    <div class="nav-item ml-16pt dropdown dropdown-notifications">
+                                        <button class="nav-link btn-flush dropdown-toggle"
+                                                type="button"
+                                                data-toggle="dropdown"
+                                                data-dropdown-disable-document-scroll
+                                                data-caret="false">
+                                            <i class="material-icons icon-24pt">more_vert</i>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <div data-perfect-scrollbar
+                                                 class="position-relative">
+                                                <div class="list-group list-group-flush mb-0">
+            
+                                                    <a href="{% url 'MainApp:invoice_cetak' pk=i.pk %}"
+                                                       class="list-group-item list-group-item-action unread" target="_blank">
+                                                        <span class="d-flex align-items-center mb-1">
+                                                        <span class="d-flex">
+                                                            <span class="flex d-flex flex-column">
+                                                                <strong class="text-black-100">Print</strong>
+                                                            </span>
+                                                        </span>
+                                                    </a>
+
+                                                    <a href="{% url 'MainApp:kwitansi' pk_src=i.pk %}"
+                                                       class="list-group-item list-group-item-action unread" target="_blank">
+                                                        <span class="d-flex align-items-center mb-1">
+                                                        <span class="d-flex">
+                                                            <span class="flex d-flex flex-column">
+                                                                <strong class="text-black-100">Kwitansi</strong>
+                                                            </span>
+                                                        </span>
+                                                    </a>
+            
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card-footer p-8pt">
+
+        <ul class="pagination justify-content-start pagination-xsm m-0">
+
+            {% if data_list.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ data_list.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true" class="material-icons">chevron_left</span>
+                        <span>Prev</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true" class="material-icons">chevron_left</span>
+                        <span>Prev</span>
+                    </a>
+                </li>
+            {% endif %}
+
+            {% if data_list.number|add:'-4' > 1 %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ data_list.number|add:'-5' }}" aria-label="Page">
+                        <span>&hellip;</span>
+                    </a>
+                </li>
+            {% endif %}
+
+            {% for i in data_list.paginator.page_range %}
+                {% if data_list.number == i %}
+                    <li class="page-item active">
+                        <a class="page-link" href="#" aria-label="Page">
+                            <span>{{ i }}</span>
+                        </a>
+                    </li>
+                {% elif i > data_list.number|add:'-5' and i < data_list.number|add:'5' %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ i }}" aria-label="Page">
+                            <span>{{ i }}</span>
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            {% if data_list.paginator.num_pages > data_list.number|add:'4' %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ data_list.number|add:'5' }}" aria-label="Page">
+                        <span>&hellip;</span>
+                    </a>
+                </li>
+            {% endif %}
+
+            {% if data_list.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ data_list.next_page_number }}" aria-label="Next">
+                        <span>Next</span>
+                        <span aria-hidden="true" class="material-icons">chevron_right</span>
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span>Next</span>
+                        <span aria-hidden="true" class="material-icons">chevron_right</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+
+    </div>
+
+</div>
+
+
+{% endblock content %}
+
+{% block custom_js %}
+<script type="text/javascript">
+    $('.table-responsive').on('show.bs.dropdown', function () {
+     $('.table-responsive').css( "overflow", "inherit" );
+});
+
+$('.table-responsive').on('hide.bs.dropdown', function () {
+     $('.table-responsive').css( "overflow", "auto" );
+})
+</script>
+{% endblock custom_js %}

@@ -1,0 +1,201 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en"
+      dir="ltr">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible"
+              content="IE=edge">
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{{ title }}</title>
+
+        <!-- Prevent the demo from appearing in search engines -->
+        <meta name="robots"
+              content="noindex">
+
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700%7COswald:300,400,500,700%7CRoboto:400,500%7CExo+2:600&display=swap"
+              rel="stylesheet">
+
+        <!-- Perfect Scrollbar -->
+        <link type="text/css"
+              href="{% static 'assets/vendor/perfect-scrollbar.css' %}"
+              rel="stylesheet">
+
+        <!-- Material Design Icons -->
+        <link type="text/css"
+              href="{% static 'assets/css/material-icons.css' %}"
+              rel="stylesheet">
+
+        <!-- Font Awesome Icons -->
+        <link type="text/css"
+              href="{% static 'assets/css/fontawesome.css' %}"
+              rel="stylesheet">
+
+        <!-- Preloader -->
+        <link type="text/css"
+              href="{% static 'assets/vendor/spinkit.css' %}"
+              rel="stylesheet">
+        <link type="text/css"
+              href="{% static 'assets/css/preloader.css' %}"
+              rel="stylesheet">
+
+        <!-- App CSS -->
+        <link type="text/css"
+              href="{% static 'assets/css/app.css' %}"
+              rel="stylesheet">
+
+        <!-- Dark Mode CSS (optional) -->
+        <link type="text/css"
+              href="{% static 'assets/css/dark-mode.css' %}"
+              rel="stylesheet">
+
+        <!-- Vector Maps -->
+        <link type="text/css"
+              href="{% static 'assets/vendor/jqvmap/jqvmap.min.css' %}"
+              rel="stylesheet">
+        
+        {% block custom_css %}{% endblock custom_css %}
+
+    </head>
+
+    <body class="layout-app layout-sticky-subnav ">
+
+        <div class="preloader">
+            <div class="sk-chase">
+                <div class="sk-chase-dot"></div>
+                <div class="sk-chase-dot"></div>
+                <div class="sk-chase-dot"></div>
+                <div class="sk-chase-dot"></div>
+                <div class="sk-chase-dot"></div>
+                <div class="sk-chase-dot"></div>
+            </div>
+        </div>
+
+        <div class="mdk-drawer-layout js-mdk-drawer-layout"
+             data-push
+             data-responsive-width="992px">
+            <div class="mdk-drawer-layout__content page-content">
+                {% if request.user.is_authenticated %}
+                <!-- Header -->
+                
+                    {% include 'MainApp/navbar.html' %}
+                
+                <!-- // END Header -->
+
+                <div class="border-bottom-2 py-32pt position-relative z-1">
+                    <div class="container-fluid page__container d-flex flex-column flex-md-row align-items-center text-center text-sm-left">
+                        <div class="flex d-flex flex-column flex-sm-row align-items-center mb-24pt mb-md-0">
+                            <div class="mb-24pt mb-sm-0 mr-sm-24pt">
+                                <h2 class="mb-0">{{ bredcum_head }}</h2>
+
+                                <ol class="breadcrumb p-0 m-0">
+                                    <li class="breadcrumb-item"><a href="{% url 'MainApp:home' %}">Home</a></li>
+
+                                    <li class="breadcrumb-item active">
+                                        {{ bredcum }}
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        {% block add_data %}{% endblock add_data %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="container-fluid page__container">
+                    <div class="page-section">
+                        {% block content %}{% endblock content %}
+                    </div>
+                </div>
+
+                {% include 'MainApp/footer.html' %}
+
+            </div>
+            <!-- // END drawer-layout__content -->
+
+            <!-- drawer -->
+            {% if request.user.is_authenticated %}
+                {% include 'MainApp/sidebar.html' %}
+            {% endif %}
+            <!-- // END drawer -->
+        </div>
+        <!-- // END drawer-layout -->
+        {% for message in messages %} 
+        {% if message.tags == 'success' %} 
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+            swal("Sukses !", "{{ message }}", "success");
+        </script>
+        {% elif message.tags == 'error' %}
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+            swal("Gagal !", "{{ message }}", "error");
+        </script>
+        {% elif message.tags == 'info' %} 
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+            swal("Info !", "{{ message }}", "info");
+        </script>
+        {% endif %}
+        {% endfor %}
+        
+        <!-- jQuery -->
+        <script src="{% static 'assets/vendor/jquery.min.js' %}"></script>
+
+        <!-- Bootstrap -->
+        <script src="{% static 'assets/vendor/popper.min.js' %}"></script>
+        <script src="{% static 'assets/vendor/bootstrap.min.js' %}"></script>
+
+        <!-- Perfect Scrollbar -->
+        <script src="{% static 'assets/vendor/perfect-scrollbar.min.js' %}"></script>
+
+        <!-- DOM Factory -->
+        <script src="{% static 'assets/vendor/dom-factory.js' %}"></script>
+
+        <!-- MDK -->
+        <script src="{% static 'assets/vendor/material-design-kit.js' %}"></script>
+
+        <!-- App JS -->
+        <script src="{% static 'assets/js/app.js' %}"></script>
+
+        <!-- Highlight.js -->
+        <script src="{% static 'assets/js/hljs.js' %}"></script>
+
+        <!-- Global Settings -->
+        <script src="{% static 'assets/js/settings.js' %}"></script>
+
+        <!-- Flatpickr -->
+        <script src="{% static 'assets/vendor/flatpickr/flatpickr.min.js' %}"></script>
+        <script src="{% static 'assets/js/flatpickr.js' %}"></script>
+
+        <!-- Moment.js -->
+        <script src="{% static 'assets/vendor/moment.min.js' %}"></script>
+        <script src="{% static 'assets/vendor/moment-range.js' %}"></script>
+
+        <!-- Chart.js -->
+        <!-- <script src="{% static 'assets/vendor/Chart.min.js' %}"></script>
+        <script src="{% static 'assets/js/chartjs.js' %}"></script> -->
+
+        <!-- Chart.js Samples -->
+        <!-- <script src="{% static 'assets/js/page.analytics-dashboard.js' %}"></script> -->
+
+        <!-- Vector Maps -->
+        <!-- <script src="{% static 'assets/vendor/jqvmap/jquery.vmap.min.js' %}"></script>
+        <script src="{% static 'assets/vendor/jqvmap/maps/jquery.vmap.world.js' %}"></script>
+        <script src="{% static 'assets/js/vector-maps.js' %}"></script> -->
+
+        <!-- List.js -->
+        <script src="{% static 'assets/vendor/list.min.js' %}"></script>
+        <script src="{% static 'assets/js/list.js' %}"></script>
+
+        <!-- Tables -->
+        <!-- <script src="{% static 'assets/js/toggle-check-all.js' %}"></script>
+        <script src="{% static 'assets/js/check-selected-row.js' %}"></script> -->
+
+        {% block custom_js %}{% endblock custom_js %}
+    </body>
+
+</html>

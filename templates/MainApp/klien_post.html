@@ -1,0 +1,70 @@
+{% extends 'MainApp/base.html' %}
+{% load static %} 
+
+{% block custom_css %}
+{% endblock custom_css %}
+
+
+{% block content %}
+<div class=" pt-32pt pt-sm-64pt pb-32pt was-validated">
+    <div class="container page__container">
+        <form method="POST" class="col-md-8 p-0 mx-auto">{% csrf_token %}
+
+            <div class="form-row">
+                <div class="col-6 col-md-6 mb-3">
+                    <label class="form-label" for="nama">Nama:</label>
+                    <input id="nama" type="text" class="form-control" placeholder="Nama Klien" name="nama" {% if klien %}value="{{ klien.klien }}"{% endif %} required>
+                    <div class="invalid-feedback">Please provide a nama.</div>
+                    <div class="valid-feedback">Looks good!</div>
+                </div>
+                <div class="col-6 col-md-6 mb-3">
+                    <label class="form-label" for="kode">Kode:</label>
+                    <input id="kode" type="text" class="form-control" placeholder="Kode" name="kode" {% if klien %}value="{{ klien.kode }}"{% endif %} required>
+                    <div class="invalid-feedback">Please provide a kode.</div>
+                    <div class="valid-feedback">Looks good!</div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-6 col-md-6 mb-3">
+                    <label class="form-label" for="contact_person">Contact Person:</label>
+                    <input id="contact_person" type="text" class="form-control" placeholder="Contact Person" name="cp" {% if klien %}value="{{ klien.cp }}"{% endif %} required>
+                    <div class="invalid-feedback">Please provide a CP.</div>
+                    <div class="valid-feedback">Looks good!</div>
+                </div>
+                <div class="col-6 col-md-6 mb-3">
+                    <label class="form-label" for="kontak">Kontak:</label>
+                    <input id="kontak" type="text" class="form-control" placeholder="Kontak" name="kontak" {% if klien %}value="{{ klien.telp }}"{% endif %}>
+                    <div class="invalid-feedback">Please provide a kontak.</div>
+                    <div class="valid-feedback">Looks good!</div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-6 col-md-6 mb-3">
+                    <label class="form-label" for="email">Email:</label>
+                    <input id="email" type="text" class="form-control" placeholder="Email" name="email" {% if klien %}value="{{ klien.email }}"{% endif %}>
+                    <div class="invalid-feedback">Please provide a email.</div>
+                    <div class="valid-feedback">Looks good!</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="password">Alamat:</label>
+                <textarea class="form-control" name="alamat" id="" cols="30" rows="10">{% if klien %}{{ klien.alamat }}{% endif %}</textarea>
+            </div>
+            <input type="hidden" name="aksi" {% if klien %}value="update_klien"{% else %}value="tambah_baru"{% endif %}>
+            <div class="text-center">
+                <button class="btn btn-accent" type="submit">{% if klien %}Update{% else %}Submit{% endif %}</button>
+                {% if klien %}
+                <input type="submit" class="btn btn-danger" name="button_delete" value="Delete">
+                {% endif %}
+                
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %} 
+
+{% block custom_js %}
+ <!-- Sweet Alert -->
+ <script src="{% static 'assets/vendor/sweetalert.min.js' %}"></script>
+ <script src="{% static 'assets/js/sweetalert.js' %}"></script>
+{% endblock custom_js %}
