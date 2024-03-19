@@ -6,16 +6,27 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true" ###
 
-GW_WKHTML = "/usr/local/bin/wkhtmltopdf"
-CSS1_WKHTML = '/home/gili/Python/CompanyApp/MyApp/static/printPDF/jquery-1.10.2.min.js'
-CSS2_WKHTML = '/home/gili/Python/CompanyApp/MyApp/static/printPDF/bootstrap.min.css'
-CSS3_WKHTML = '/home/gili/Python/CompanyApp/MyApp/static/printPDF/bootstrap.bundle.min.js'
-LOGO_CAP = '/home/gili/Python/CompanyApp/MyApp/static/pt_img/logo.jpg'
-TTD_CAP = '/home/gili/Python/CompanyApp/MyApp/static/pt_img/ttdCAP1.png'
+# GW_WKHTML = "/usr/local/bin/wkhtmltopdf"
+# CSS1_WKHTML = '/home/gili/Python/CompanyApp/MyApp/static/printPDF/jquery-1.10.2.min.js'
+# CSS2_WKHTML = '/home/gili/Python/CompanyApp/MyApp/static/printPDF/bootstrap.min.css'
+# CSS3_WKHTML = '/home/gili/Python/CompanyApp/MyApp/static/printPDF/bootstrap.bundle.min.js'
+# LOGO_CAP = '/home/gili/Python/CompanyApp/MyApp/static/pt_img/logo.jpg'
+# TTD_CAP = '/home/gili/Python/CompanyApp/MyApp/static/pt_img/ttdCAP1.png'
+# LOGO_SA = ''
+# TTD_SA = '/home/gili/Python/CompanyApp/MyApp/static/pt_img/ttdSA.jpg'
+# LOGO_PYDEVL = '/home/gili/Python/CompanyApp/MyApp/static/pt_img/PyDevL.jpg'
+# TTD_PYDEVL = '/home/gili/Python/CompanyApp/MyApp/static/pt_img/my_ttd_no_bg.png'
+
+GW_WKHTML = "/home/cannindica/wkthml-install/usr/local/bin/wkhtmltopdf"
+CSS1_WKHTML = '/home/cannindica/CAP/static/printPDF/jquery-1.10.2.min.js'
+CSS2_WKHTML = '/home/cannindica/CAP/static/printPDF/bootstrap.min.css'
+CSS3_WKHTML = '/home/cannindica/CAP/static/printPDF/bootstrap.bundle.min.js'
+LOGO_CAP = '/home/cannindica/CAP/static/pt_img/logo.jpg'
+TTD_CAP = '/home/cannindica/CAP/static/pt_img/ttdCAP1.png'
 LOGO_SA = ''
-TTD_SA = '/home/gili/Python/CompanyApp/MyApp/static/pt_img/ttdSA.jpg'
-LOGO_PYDEVL = '/home/gili/Python/CompanyApp/MyApp/static/pt_img/PyDevL.jpg'
-TTD_PYDEVL = '/home/gili/Python/CompanyApp/MyApp/static/pt_img/my_ttd_no_bg.png'
+TTD_SA = '/home/cannindica/CAP/static/pt_img/ttdSA.jpg'
+LOGO_PYDEVL = '/home/cannindica/CAP/static/pt_img/PyDevL.jpg'
+TTD_PYDEVL = '/home/cannindica/CAP/static/pt_img/my_ttd_no_bg.png'
 
 
 # Quick-start development settings - unsuitable for production
